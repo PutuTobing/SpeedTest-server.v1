@@ -121,6 +121,9 @@ sudo firewall-cmd --permanent --add-port=8080/tcp && sudo firewall-cmd --reload
 ```
 
 ---
+## Daftarkan Server
+1. setelah anda selesai melakukan instalasi dan setelah melakukan pengecekan pada http://ipserveranda:8080 muncul hasil speedtest ready maka anda bisa mendaftarkan server speedtest ke web kami di https://speedtest.btd.co.id/
+2. ataupun anda bisa menghubungi kami melalui informasi kontak dibawah ini.
 
 ## 📞 Support
 
