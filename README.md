@@ -8,7 +8,7 @@ Server speedtest berbasis Go untuk pengujian kecepatan internet jaringan lokal I
 ## ⚡ Instalasi Cepat (1 Perintah)
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/SpeedTest-server.v1.git
+git clone https://github.com/PutuTobing/SpeedTest-server.v1.git
 cd SpeedTest-server.v1
 sudo bash install.sh
 ```
