@@ -29,10 +29,10 @@ Script akan otomatis:
 | Komponen | Minimum |
 |----------|---------|
 | OS       | Ubuntu 20.04 / Debian 10 / CentOS 7+ / Rocky Linux |
-| RAM      | 512 MB |
-| CPU      | 1 Core |
-| Disk     | 200 MB |
-| Port     | 8080 (dapat diganti) |
+| RAM      | 4 Gbps |
+| CPU      | 2 Core |
+| Disk     | 32 Gb |
+| Port     | 8080 (tidak dapat diganti) |
 
 ---
 
@@ -40,7 +40,7 @@ Script akan otomatis:
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/SpeedTest-server.v1.git
+git clone https://github.com/PutuTobing/SpeedTest-server.v1.git
 cd SpeedTest-server.v1
 ```
 
@@ -68,16 +68,6 @@ Output yang diharapkan:
 
 ---
 
-## 🌐 API Endpoint
-
-| Method | Endpoint    | Deskripsi              |
-|--------|-------------|------------------------|
-| GET    | `/`         | Status server          |
-| GET    | `/ping`     | Test latency           |
-| GET    | `/download` | Test download speed    |
-| POST   | `/upload`   | Test upload speed      |
-
----
 
 ## ⚙️ Konfigurasi
 
