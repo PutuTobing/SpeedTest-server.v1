@@ -1,4 +1,4 @@
-# 🚀 SpeedTest Server v1.0
+<img width="733" height="320" alt="image" src="https://github.com/user-attachments/assets/bad07d63-0315-4bfc-b047-43b78c10e3cf" /># 🚀 SpeedTest Server v1.0
 
 **SKY BASE TECHNOLOGY DIGITAL (BTD)**  
 Server speedtest berbasis Go untuk pengujian kecepatan internet jaringan lokal ISP.
@@ -121,17 +121,7 @@ sudo firewall-cmd --permanent --add-port=8080/tcp && sudo firewall-cmd --reload
 ```
 ## Alur Speedtest 
 Contoh :
-
-User di Lampung Timur
-        │
-        │ 1. Buka website
-        ▼
-Web Server (Jakarta)
-        │
-        │ 2. Download HTML/CSS/JS (hanya sekali)
-        ▼
-Browser User (Lampung Timur) ──────────────────────────────►  Backend Speedtest (Lampung Timur)
-                                    3. Test PING/DOWNLOAD/UPLOAD langsung
+<img width="637" height="236" alt="image" src="https://github.com/user-attachments/assets/a6342ad5-ef3f-440b-b0f5-3c3ebb752445" />
 
 --
 ## Daftarkan Server
