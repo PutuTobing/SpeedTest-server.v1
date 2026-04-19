@@ -119,6 +119,19 @@ sudo ufw allow 8080/tcp
 # firewalld
 sudo firewall-cmd --permanent --add-port=8080/tcp && sudo firewall-cmd --reload
 ```
+## Alur Speedtest 
+Contoh :
+
+User di Lampung Timur
+        │
+        │ 1. Buka website
+        ▼
+Web Server (Jakarta)
+        │
+        │ 2. Download HTML/CSS/JS (hanya sekali)
+        ▼
+Browser User (Lampung Timur) ──────────────────────────────►  Backend Speedtest (Lampung Timur)
+                                    3. Test PING/DOWNLOAD/UPLOAD langsung
 
 ---
 ## Daftarkan Server
