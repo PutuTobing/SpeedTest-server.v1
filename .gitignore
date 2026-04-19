@@ -1,6 +1,7 @@
 # Binary output
 speedtest-bin
 speedtest-server
+speedtest
 
 # Environment files (jangan commit config dengan IP/port spesifik)
 .env

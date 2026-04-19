@@ -2,10 +2,10 @@
 # =============================================================================
 #  SpeedTest Server - Auto Install Script
 #  SKY BASE TECHNOLOGY DIGITAL (BTD)
-#  Version: 1.0.0
+#  Version: 1.1.0
 # =============================================================================
 
-set -e
+set -euo pipefail
 
 # ── Warna Terminal ──────────────────────────────────────────────────────────
 RED='\033[0;31m'
@@ -107,7 +107,7 @@ install_dependencies() {
 install_go() {
     print_step "Memeriksa instalasi Go..."
 
-    GO_VERSION="1.21.8"
+    GO_VERSION="1.26.2"
     GO_MIN_VERSION="1.21"
 
     if command -v go &>/dev/null; then
@@ -289,6 +289,7 @@ LOCATION=${SERVER_LOCATION}
 BUFFER_SIZE=1048576
 TIMEOUT=30s
 EOF
+    chmod 600 /etc/speedtest/speedtest.env
     print_ok "File konfigurasi dibuat: /etc/speedtest/speedtest.env"
 
     # Salin binary ke /usr/local/bin

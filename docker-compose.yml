@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  speedtest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: speedtest-service
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - BIND_IP=0.0.0.0
+      - NODE_NAME=SpeedTest-Docker
+      - BUFFER_SIZE=1048576
+      - TIMEOUT=30s
+    restart: unless-stopped
+    networks:
+      - speedtest-network
+    # Resource limits (optional)
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+networks:
+  speedtest-network:
+    driver: bridge

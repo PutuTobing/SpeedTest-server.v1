@@ -1,0 +1,17 @@
+# Example nodes configuration
+# Format: hostname:port,node_name
+# Lines starting with # are ignored
+
+# Production nodes
+103.254.100.1:8080,Jakarta-Node
+103.254.100.2:8080,Lampung-Node
+103.254.100.3:8080,Bandung-Node
+
+# Or using domain names
+# speedtest1.btd.co.id:8080,Jakarta
+# speedtest2.btd.co.id:8080,Lampung
+# speedtest3.btd.co.id:8080,Bandung
+
+# Development nodes (commented out)
+# localhost:8080,Local-Test
+# 192.168.1.100:8080,Dev-Node

@@ -47,7 +47,7 @@ func loadConfig() Config {
 port := getEnv("PORT", "8080")
 bindIP := getEnv("BIND_IP", "0.0.0.0")
 nodeName := getEnv("NODE_NAME", "SpeedTest Node")
-bufferSize, _ := strconv.Atoi(getEnv("BUFFER_SIZE", "1048576")) // 1MB default
+bufferSize, _ := strconv.Atoi(getEnv("BUFFER_SIZE", "4194304")) // 4MB default — covers BDP for 1Gbps@8ms
 timeout, _ := time.ParseDuration(getEnv("TIMEOUT", "30s"))
 
 return Config{
@@ -91,10 +91,30 @@ next(w, r)
 }
 }
 
-// pingHandler handles ping requests for latency measurement
+// pingHandler handles ping/echo requests for latency measurement.
+// Accepts GET (warmup/legacy) and POST (echo-packet mode).
+// For POST: reads the entire request body so the TCP stack is fully
+// drained before writing the reply — this ensures the measured RTT
+// reflects the true client→server→client round-trip, not half-trip.
 func pingHandler(w http.ResponseWriter, r *http.Request) {
 w.Header().Set("X-Node-Name", config.NodeName)
 w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+
+if r.Method == http.MethodPost {
+// Drain the request body (client-sent packet) before replying.
+// io.Discard + 1KB limit prevents abuse while ensuring we've read
+// all bytes the client sent before measuring the reply timestamp.
+io.CopyN(io.Discard, r.Body, 1024)
+r.Body.Close()
+w.Header().Set("Content-Type", "application/json")
+w.WriteHeader(http.StatusOK)
+// Echo the server receive-timestamp so the client can detect
+// one-way asymmetry if needed in future.
+fmt.Fprintf(w, `{"pong":true,"ts":%d}`, time.Now().UnixMilli())
+return
+}
+
+// GET / HEAD fallback
 w.Header().Set("Content-Type", "text/plain")
 w.WriteHeader(http.StatusOK)
 fmt.Fprint(w, "pong")
@@ -154,13 +174,11 @@ return
 }
 written += int64(n)
 
-// Flush to ensure data is sent immediately
+// Flush to push data to the OS TCP stack immediately;
+// backpressure (Write blocking on full socket buffer) prevents CPU spin.
 if f, ok := w.(http.Flusher); ok {
 f.Flush()
 }
-
-// Small sleep to prevent CPU spinning
-time.Sleep(1 * time.Millisecond)
 }
 }
 }
