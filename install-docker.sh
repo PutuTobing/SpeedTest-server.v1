@@ -14,7 +14,7 @@
 set -euo pipefail
 
 # ── Konstanta ─────────────────────────────────────────────────────────────────
-DOCKER_IMAGE="pututobing/speedtest-server"
+DOCKER_IMAGE="ipututobing/speedtest-server"
 IMAGE_TAG="latest"
 CONTAINER_NAME="speedtest-server"
 DEFAULT_PORT="8080"
