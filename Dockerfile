@@ -1,45 +1,53 @@
-# Multi-stage build for minimal image size
-FROM golang:1.21-alpine AS builder
+# =============================================================================
+#  SpeedTest Server - Dockerfile
+#  Multi-stage build: compile with Go, run in minimal scratch image
+#  Supports: linux/amd64, linux/arm64, linux/arm/v7
+# =============================================================================
+
+# Stage 1: Build
+FROM golang:1.26-alpine AS builder
 
 # Install build dependencies
-RUN apk add --no-cache git ca-certificates
+RUN apk add --no-cache git ca-certificates tzdata
 
-# Set working directory
 WORKDIR /build
 
-# Copy go mod files
+# Cache dependency layer separately
 COPY go.mod ./
-
-# Download dependencies
 RUN go mod download
 
-# Copy source code
+# Copy source and build
 COPY main.go ./
 
-# Build binary with optimizations
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
-    -ldflags="-s -w" \
+# Build with optimizations — auto-detect target arch from Docker buildx
+RUN CGO_ENABLED=0 GOOS=linux go build \
+    -ldflags="-s -w -X main.version=1.1.0" \
     -o speedtest \
     main.go
 
-# Final stage - minimal image
+# Stage 2: Minimal runtime image
 FROM scratch
 
-# Copy CA certificates for HTTPS (if needed in future)
+# CA certificates (for future HTTPS/TLS support)
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+# Timezone data
+COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
 
-# Copy binary from builder
+# Copy compiled binary
 COPY --from=builder /build/speedtest /speedtest
 
-# Expose port
+# Expose default port
 EXPOSE 8080
 
-# Set default environment variables
+# Default environment variables (all overridable via -e or docker-compose)
 ENV PORT=8080 \
     BIND_IP=0.0.0.0 \
     NODE_NAME=SpeedTest-Docker \
-    BUFFER_SIZE=1048576 \
+    LOCATION=Unknown \
+    BUFFER_SIZE=4194304 \
     TIMEOUT=30s
 
-# Run the binary
+# Run as non-root (UID 65534 = nobody)
+USER 65534
+
 ENTRYPOINT ["/speedtest"]

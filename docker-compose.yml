@@ -1,32 +1,40 @@
 version: '3.8'
+# =============================================================================
+#  SpeedTest Server - Docker Compose
+#  Cara pakai: docker compose up -d
+#  Ganti variabel NODE_NAME, LOCATION, dan PORT sesuai server Anda
+# =============================================================================
 
 services:
   speedtest:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: speedtest-service
-    ports:
-      - "8080:8080"
-    environment:
-      - PORT=8080
-      - BIND_IP=0.0.0.0
-      - NODE_NAME=SpeedTest-Docker
-      - BUFFER_SIZE=1048576
-      - TIMEOUT=30s
+    image: pututobing/speedtest-server:latest
+    # Atau build dari source:
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    container_name: speedtest-server
     restart: unless-stopped
+    ports:
+      - "${SERVER_PORT:-8080}:8080"
+    environment:
+      PORT: "8080"
+      BIND_IP: "0.0.0.0"
+      NODE_NAME: "${NODE_NAME:-SpeedTest-Docker}"
+      LOCATION: "${LOCATION:-Unknown}"
+      BUFFER_SIZE: "4194304"
+      TIMEOUT: "30s"
     networks:
-      - speedtest-network
-    # Resource limits (optional)
+      - speedtest-net
     deploy:
       resources:
         limits:
           cpus: '2'
-          memory: 1G
+          memory: 512M
         reservations:
-          cpus: '0.5'
-          memory: 256M
+          cpus: '0.25'
+          memory: 64M
 
 networks:
-  speedtest-network:
+  speedtest-net:
     driver: bridge
+
