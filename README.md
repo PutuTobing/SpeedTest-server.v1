@@ -121,7 +121,8 @@ sudo firewall-cmd --permanent --add-port=8080/tcp && sudo firewall-cmd --reload
 ```
 ## Alur Speedtest 
 Contoh :
-<img width="637" height="236" alt="image" src="https://github.com/user-attachments/assets/a6342ad5-ef3f-440b-b0f5-3c3ebb752445" />
+<img width="624" height="197" alt="image" src="https://github.com/user-attachments/assets/2832b9ef-c562-4e4e-b000-6b7277348637" />
+
 
 --
 ## Daftarkan Server
