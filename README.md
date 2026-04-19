@@ -1,4 +1,4 @@
-<img width="733" height="320" alt="image" src="https://github.com/user-attachments/assets/bad07d63-0315-4bfc-b047-43b78c10e3cf" /># 🚀 SpeedTest Server v1.0
+# 🚀 SpeedTest Server v1.0
 
 **SKY BASE TECHNOLOGY DIGITAL (BTD)**  
 Server speedtest berbasis Go untuk pengujian kecepatan internet jaringan lokal ISP.
